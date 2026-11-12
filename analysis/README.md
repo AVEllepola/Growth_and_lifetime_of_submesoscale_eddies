@@ -21,40 +21,7 @@ spacing (dominant wavelength) and eddy lifetime.
 | `06_fig3_pv_multi_experiment_panel.ipynb` | Surface PV at four times for slope widths $\hat W$ = 1, 5, 9, 13, 17 and the flat-bottom control. | Fig. 3 |
 | `07_figs4-6_theory_vs_simulations.ipynb` | Theory curves and simulated values of peak growth rate (Fig. 4) and dominant wavelength (Fig. 5) against $Ro$, $\hat h$, $\hat W$ and $\hat X_j$. Data-completeness filter, and the pooled comparison of growth rate, wavelength and lifetime with least-squares fits and cluster-bootstrap 95% confidence intervals (Fig. 6). | Figs. 4–6 |
 
-## Workflow
 
-```
-MOM6 output ──> 00 (catalogs) ──> 04 (growth rate, wavelength, lifetime -> NetCDF) ──> 07 (Figs 4-6)
-                     └──────────> 05 (Fig 2)
-MOM6 output ──────────────────────> 06 (Fig 3)
-01 (Fig 1), 02 and 03 (theory) run on their own.
-```
-
-1. Run `00` to build the datastores.
-2. Run `04` to compute the per-experiment diagnostics. It processes experiments in concurrent
-   batches on a Dask cluster and needs a large node (it was run on a 28-core, 256 GB node).
-3. Run `05`, `06` and `07` to make the figures. `07` computes the theory curves itself (a few
-   minutes; in parallel if `joblib` is installed) and caches them in `figures/`.
-
-`01`, `02`, `02_flat_bottom_…` and `03` need no model output.
-
-## Inputs and outputs
-
-| Notebook | Reads | Writes |
-|---|---|---|
-| `00` | MOM6 experiment folders `test*-*` | `intake_style_datastore/test*.json` |
-| `04` | intake catalogs, `ocean_static.nc`, `MOM_IC.nc` | `300_nondimplot_data_13_10.nc` (processed results) |
-| `05` | intake catalog for `test242`, `ocean_static.nc`, `ocean_interior.nc` (PV) | `four_panel_plots/` |
-| `06` | `ocean_static.nc`, `MOM_IC.nc`, `ocean_interior.nc` (PV) | `pv_plots/` |
-| `07` | processed results NetCDF | `figures/` (PDF/PNG figures, theory caches `*.npz`, `pooled_comparison_*.csv`) |
-| `01`, `03` | – | `idealized_IC_diagram.png/.pdf`, `pv_plots/theory.png` |
-
-Data paths are set near the top of each notebook and point to the NCI Gadi locations used for
-the paper (`/g/data/nm03/...`, `/scratch/nm03/...`). Change them to your own locations.
-
-**Note:** `04` saves `300_nondimplot_data_13_10.nc`, while `07` reads
-`300_nondimplot_data_19_10.nc` (the file used for the paper). Rename the file, or change
-`DATA_FILES` in `07`, when rerunning.
 
 ## Environment
 
