@@ -31,17 +31,3 @@ $\hat W$ and the position of the current on the slope $\hat X_j$.
 The full parameter table for every experiment is `experiment_params` in
 `analysis/07_figs4-6_theory_vs_simulations.ipynb`.
 
-## Workflow
-
-1. Create the input files with a notebook in `MOM6_init_files_creation/`.
-2. Run MOM6 with a run directory like `MOM6_rundir_example/` (payu, on NCI Gadi), pointing
-   `input:` in `config.yaml` to the folder with the input files.
-3. Process the output and make the figures with the notebooks in `analysis/`.
-
-Paths in the notebooks and `config.yaml` point to the NCI Gadi locations used for the paper
-(`/g/data/nm03/...`, `/scratch/nm03/...`); change them to your own.
-
-## Requirements
-
-NCI Gadi with the `conda/analysis3` environment (`numpy`, `scipy`, `matplotlib`, `pandas`,
-`xarray`, `dask`, `xgcm`, `intake-esm`, `access_nri_intake`), and a MOM6 executable run with payu.
